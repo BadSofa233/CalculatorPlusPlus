@@ -8,11 +8,10 @@ class Expression;
 class ExpressionTree{
 public:
     ExpressionTree();
+    ~ExpressionTree();
     Expression * getRoot() const;
     void setRoot(Expression *);
-    Complex execute();
-
-    void printTree(Expression *);
+    Complex * execute();
 private:
     Expression * root;
 };

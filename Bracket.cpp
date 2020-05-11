@@ -1,6 +1,5 @@
 #include "Expression.hpp"
 #include "ExpressionTree.hpp"
-//#include "TreeNode.hpp"
 #include "Bracket.hpp"
 #include "common.hpp"
 
@@ -13,20 +12,11 @@ OpenBracket::OpenBracket() : Bracket(){
 }
 
 Complex * OpenBracket::execute(Complex * x) const{
-    DEBUG_PRINT("in open bracket execute\n");
-    Complex * ret = new Complex(x->getReal(), x->getImag());
-    delete x;
-    return ret;
+    return x;
 }
 
 void OpenBracket::formExpressionTree(ExpressionTree & expTree) {
     // set the new root of expression tree
-//    TreeNode<Operation> * it = expTree.getRoot();
-//    for(; it->hasChildren(); it = it->getLastChild());
-//    Expression * openBr = new Expression(0, this);
-//    it->addChild(openBr);
-//    expTree.setRoot(openBr);
-//    DEBUG_PRINT("Root is now %s\n", expTree.getRoot()->getData()->getWord());
     DEBUG_PRINT("Forming expression tree with open bracket %s rank %d\n", word, rankMatch);
     TreeNode<Operation> * oldParent = expTree.getRoot();
     TreeNode<Operation> * it = oldParent->getChild(0);

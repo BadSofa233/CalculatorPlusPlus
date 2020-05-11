@@ -88,7 +88,7 @@ bool Dictionary::hasNext(char c) const {
 
 void Dictionary::reset() {
     cursor = dictionary->getRoot();
-    DEBUG_PRINT("reset dictionary");
+    DEBUG_PRINT("reset dictionary\n");
 }
 
 Operation * Dictionary::getData() const {

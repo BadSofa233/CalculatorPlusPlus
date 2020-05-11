@@ -1,7 +1,6 @@
 
 #include "common.hpp"
 #include "Command.hpp"
-#include "Calculation.hpp"
 #include "Dictionary.hpp"
 
 Command::Command() : Operation(){
@@ -15,6 +14,8 @@ Command::~Command(){}
 Calculate::Calculate() : Command(){
     word = "calculate";
 }
+
+extern Complex * calcString(std::string &);
 
 void Calculate::execute(const unsigned& argc, std::string* argv) {
     DEBUG_PRINT("In calculate execute()\n");

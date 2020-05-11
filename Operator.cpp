@@ -18,7 +18,7 @@ Plus::Plus() : Operator(){
 }
 
 Complex * Plus::execute(Complex * argList) const{
-    Complex * result = new Complex(argList[1] + argList[0]);
+    Complex * result = new Complex(argList[0] + argList[1]);
     delete[] argList;
     return result;
 }
@@ -29,7 +29,7 @@ Minus::Minus() : Operator(){
 }
 
 Complex * Minus::execute(Complex * argList) const{
-    Complex * result = new Complex(argList[1] - argList[0]);
+    Complex * result = new Complex(argList[0] - argList[1]);
     delete[] argList;
     return result;
 }
@@ -40,7 +40,7 @@ Multiply::Multiply() : Operator(){
 }
 
 Complex * Multiply::execute(Complex * argList) const{
-    Complex * result = new Complex(argList[1] * argList[0]);
+    Complex * result = new Complex(argList[0] * argList[1]);
     delete[] argList;
     return result;
 }
@@ -51,7 +51,7 @@ Divide::Divide() : Operator(){
 }
 
 Complex * Divide::execute(Complex * argList) const{
-    Complex * result = new Complex(argList[1] / argList[0]);
+    Complex * result = new Complex(argList[0] / argList[1]);
     delete[] argList;
     return result;
 }
@@ -62,7 +62,7 @@ Power::Power() : Operator(){
 }
 
 Complex * Power::execute(Complex * argList) const{
-    Complex * result = new Complex(argList[1].complexPow(argList[0]));
+    Complex * result = new Complex(argList[0].complexPow(argList[1]));
     delete[] argList;
     return result;
 }
@@ -99,7 +99,7 @@ And::And() : RealOnly(){
 
 Complex * And::execute(Complex * argList) const{
     RealOnly::checkReal(argList);
-    unsigned temp = (int)argList[1].getReal() & (int)argList[0].getReal();
+    unsigned temp = (int)argList[0].getReal() & (int)argList[1].getReal();
     unsigned mask = 0b1 << GIO.WordLength.length();
     if(mask & temp){ // detect if the highest bit is 1, the original number is negative
         temp |= ~((unsigned)pow(2,GIO.WordLength.length()) - 1);
@@ -117,7 +117,7 @@ Or::Or() : RealOnly(){
 
 Complex * Or::execute(Complex * argList) const{
     RealOnly::checkReal(argList);
-    Complex * result = new Complex((int)argList[1].getReal() | (int)argList[0].getReal(), 0);
+    Complex * result = new Complex((int)argList[0].getReal() | (int)argList[1].getReal(), 0);
     delete[] argList;
     return result;
 }
@@ -148,7 +148,7 @@ Xor::Xor() : RealOnly(){
 
 Complex * Xor::execute(Complex * argList) const{
     RealOnly::checkReal(argList);
-    Complex * result = new Complex((int)argList[1].getReal() ^ (int)argList[0].getReal(), 0);
+    Complex * result = new Complex((int)argList[0].getReal() ^ (int)argList[1].getReal(), 0);
     delete[] argList;
     return result;
 }
@@ -161,7 +161,7 @@ Nor::Nor() : RealOnly(){
 
 Complex * Nor::execute(Complex * argList) const{
     RealOnly::checkReal(argList);
-    Complex* result = new Complex(~((int)argList[1].getReal() | (int)argList[0].getReal()), 0);
+    Complex* result = new Complex(~((int)argList[0].getReal() | (int)argList[1].getReal()), 0);
     delete[] argList;
     return result;
 }
@@ -174,7 +174,7 @@ Nand::Nand() : RealOnly(){
 
 Complex * Nand::execute(Complex * argList) const{
     RealOnly::checkReal(argList);
-    Complex* result = new Complex(~((int)argList[1].getReal() & (int)argList[0].getReal()), 0);
+    Complex* result = new Complex(~((int)argList[0].getReal() & (int)argList[1].getReal()), 0);
     delete[] argList;
     return result;
 }
@@ -204,7 +204,7 @@ Parallel::Parallel() : Operator(){
 
 Complex * Parallel::execute(Complex * argList) const{
     Complex * result = new Complex();
-    *result = (argList[1] * argList[0]) / (argList[1] + argList[0]);
+    *result = (argList[0] * argList[1]) / (argList[0] + argList[1]);
     delete[] argList;
     return result;
 }

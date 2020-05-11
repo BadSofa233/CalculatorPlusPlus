@@ -12,35 +12,6 @@ class Expression : public TreeNode<Operation> {
 public:
     Expression(const char & c, Operation * o) : TreeNode(c, o) {}
 
-//    void addChild(TreeNode<Operation> * child) override{
-//        TreeNode * it = children, * prev = children;
-//        for(it = children; (it != nullptr) && ((int)it->getKey() <= (int)child->getKey()); it = it->sibling){
-//        // move it to the position where the char to be added follows an ascending order
-//            if(it->getKey() == child->getKey()){
-//                if(it == children){
-//                    children = child;
-//                    return;
-//                }
-//                prev->sibling = child;
-//                child->sibling = it->sibling;
-//                return;
-//            }
-//            prev = it;
-//        }
-//        if(it == children){ // if it is at the head
-//            children = child;
-//            child->setParent(this);
-//            children->sibling = it;
-//        }
-//        else{ // if it is in the middle
-//            prev->sibling = child;
-//            child->setParent(this);
-//            prev = prev->sibling;
-//            prev->sibling = it;
-//        }
-//
-//    }
-
     void traverse() override {
         DEBUG_PRINT("Traverse Expression with op %s and argNum %d\n", getData()->getWord(), getData()->getArgNum());
         Complex * argList = nullptr;
@@ -48,6 +19,7 @@ public:
         unsigned argNum = op->getArgNum();
         if(argNum > 1) {
             argList = new Complex[argNum];
+            // argList will be taken by op->execute() and be destroyed in there
             for(unsigned i = 0; i < argNum; ++i){
                 getChild(i)->traverse();
                 argList[i] = getChild(i)->getData()->getValue();
@@ -56,11 +28,17 @@ public:
         else if(argNum) {
             getChild(0)->traverse();
             argList = new Complex;
+            // op->execute() might not free argList it there only one argument
+            // but anyway it is this function's responsibility
+            // to free the pointer returned by op->execute().
             *argList = getChild(0)->getData()->getValue();
         }
+
         DEBUG_PRINT("Fetch arg complete\n");
-        op->setValue(*(op->execute(argList)));
+        Complex * result = op->execute(argList);
+        op->setValue(*result);
         DEBUG_PRINT("execute result: %z\n", op->getValue());
+        delete result;
     }
 };
 

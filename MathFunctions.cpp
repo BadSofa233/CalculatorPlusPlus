@@ -9,7 +9,7 @@ MathFunctions::MathFunctions() : PostposOp(){
 }
 
 Complex* MathFunctions::execute(Complex* x) const{
-    std::cout << "MathFunctions ()\n";
+    DEBUG_PRINT("MathFunctions()\n");
     return nullptr;
 }
 
