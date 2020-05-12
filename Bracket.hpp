@@ -1,10 +1,10 @@
 #ifndef BRACKET_HPP_INCLUDED
 #define BRACKET_HPP_INCLUDED
 
-#include "Operation.hpp"
+#include "Token.hpp"
 
 /// Brackets ///
-class Bracket : public Operation{
+class Bracket : public Token{
 public:
     Bracket();
 };

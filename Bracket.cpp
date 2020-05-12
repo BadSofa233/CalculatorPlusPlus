@@ -3,11 +3,11 @@
 #include "Bracket.hpp"
 #include "common.hpp"
 
-Bracket::Bracket() : Operation(){}
+Bracket::Bracket() : Token(){}
 
 OpenBracket::OpenBracket() : Bracket(){
     argNum = 1;
-    opType = OPEN_BRACKET;
+    type = OPEN_BRACKET;
     rankMatch = 5;
 }
 
@@ -18,8 +18,8 @@ Complex * OpenBracket::execute(Complex * x) const{
 void OpenBracket::formExpressionTree(ExpressionTree & expTree) {
     // set the new root of expression tree
     DEBUG_PRINT("Forming expression tree with open bracket %s rank %d\n", word, rankMatch);
-    TreeNode<Operation> * oldParent = expTree.getRoot();
-    TreeNode<Operation> * it = oldParent->getChild(0);
+    TreeNode<Token> * oldParent = expTree.getRoot();
+    TreeNode<Token> * it = oldParent->getChild(0);
     Expression * openBr = new Expression(0, this);
     for(; it != nullptr; it = it->getLastChild()) {
         DEBUG_PRINT("it op: %s, rank: %d\n", it->getData()->getWord(), it->getData()->getRankMatch());
@@ -40,7 +40,7 @@ void OpenBracket::formExpressionTree(ExpressionTree & expTree) {
 
 CloseBracket::CloseBracket() : Bracket(){
     argNum = 0;
-    opType = CLOSE_BRACKET;
+    type = CLOSE_BRACKET;
 }
 
 void CloseBracket::formExpressionTree(ExpressionTree & expTree) {
@@ -53,7 +53,7 @@ void CloseBracket::formExpressionTree(ExpressionTree & expTree) {
         throw(err);
     }
     // move root to the previous open bracket or the original root
-    TreeNode<Operation> * it = root->getParent();
+    TreeNode<Token> * it = root->getParent();
     DEBUG_PRINT("root parent is not null\n");
     for(; (it->getData()!= nullptr) && (it->getData()->getType() != OPEN_BRACKET); it = it->getParent()){
         DEBUG_PRINT("it: %s\n", it->getData()->getWord());

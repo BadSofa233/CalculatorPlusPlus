@@ -27,7 +27,7 @@
 #include "config.hpp"
 #include "Complex.hpp"
 #include "Dictionary.hpp"
-#include "Operation.hpp"
+#include "Token.hpp"
 #include "Command.hpp"
 #include "Calculation.hpp"
 #include "common.hpp"
@@ -62,9 +62,9 @@ int main(){
             fetchArgs(argc, &argv, input);
             DEBUG_PRINT("fetch args complete\n");
             cmdArgv = argv;
-            Operation * cmd = dictionary.searchString("calculate");
+            Token * cmd = dictionary.searchString("calculate");
             DEBUG_PRINT("Fetched 'calculate' command\n");
-            Operation * op = dictionary.searchString(argv[0]);
+            Token * op = dictionary.searchString(argv[0]);
             if(op != nullptr && op->getType() == COMMAND){
                 cmd = op;
                 DEBUG_PRINT("Fetched '%s' command\n", cmd->getWord());

@@ -3,9 +3,9 @@
 
 #include <cmath>
 #include "Complex.hpp"
-#include "Operation.hpp"
+#include "Token.hpp"
 
-class MathFunctions : public PostposOp{
+class MathFunctions : public Postpos{
 public:
     MathFunctions();
     virtual Complex * execute(Complex *) const;

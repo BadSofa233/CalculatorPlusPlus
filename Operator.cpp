@@ -1,8 +1,8 @@
 #include "Operator.hpp"
 #include "common.hpp"
 
-Operator::Operator() : PreposOp(){
-    opType = OPERATOR;
+Operator::Operator() : Prepos(){
+    type = OPERATOR;
     argNum = 2;
 }
 
@@ -67,7 +67,7 @@ Complex * Power::execute(Complex * argList) const{
     return result;
 }
 
-Negative::Negative() : PostposOp(){
+Negative::Negative() : Postpos(){
     argNum = 1;
     word = "negative";
     rankMatch = 4;
@@ -122,7 +122,7 @@ Complex * Or::execute(Complex * argList) const{
     return result;
 }
 
-Not::Not() : PostposOp(){
+Not::Not() : Postpos(){
     word = "not";
     argNum = 1;
     rankMatch = 4;

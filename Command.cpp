@@ -3,8 +3,8 @@
 #include "Command.hpp"
 #include "Dictionary.hpp"
 
-Command::Command() : Operation(){
-    opType = COMMAND;
+Command::Command() : Token(){
+    type = COMMAND;
 }
 
 Command::~Command(){}

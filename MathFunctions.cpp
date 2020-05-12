@@ -1,11 +1,11 @@
 #include "MathFunctions.hpp"
 #include "common.hpp"
 
-MathFunctions::MathFunctions() : PostposOp(){
+MathFunctions::MathFunctions() : Postpos(){
     argNum = 1;
     //command = 0;
     rankMatch = 4;
-    opType = FUNCTION;
+    type = FUNCTION;
 }
 
 Complex* MathFunctions::execute(Complex* x) const{

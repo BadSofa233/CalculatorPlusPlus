@@ -3,19 +3,19 @@
 
 #include "TreeNode.hpp"
 #include "Complex.hpp"
-#include "Operation.hpp"
+#include "Token.hpp"
 
-// An Expression object is a tree of Operations
-// Data in node is the position of argument
+// An Expression object is a tree of Tokens
+// Key of node is the position of argument
 
-class Expression : public TreeNode<Operation> {
+class Expression : public TreeNode<Token> {
 public:
-    Expression(const char & c, Operation * o) : TreeNode(c, o) {}
+    Expression(const char & c, Token * o) : TreeNode(c, o) {}
 
     void traverse() override {
         DEBUG_PRINT("Traverse Expression with op %s and argNum %d\n", getData()->getWord(), getData()->getArgNum());
         Complex * argList = nullptr;
-        Operation * op = getData();
+        Token * op = getData();
         unsigned argNum = op->getArgNum();
         if(argNum > 1) {
             argList = new Complex[argNum];
@@ -29,8 +29,8 @@ public:
             getChild(0)->traverse();
             argList = new Complex;
             // op->execute() might not free argList it there only one argument
-            // but anyway it is this function's responsibility
-            // to free the pointer returned by op->execute().
+            // but anyway it is in this process the pointer
+            // returned by op->execute() should be freed
             *argList = getChild(0)->getData()->getValue();
         }
 
@@ -39,6 +39,11 @@ public:
         op->setValue(*result);
         DEBUG_PRINT("execute result: %z\n", op->getValue());
         delete result;
+    }
+
+    ~Expression() {
+        DEBUG_PRINT("Expression destruction\n");
+        setData(nullptr);
     }
 };
 

@@ -4,9 +4,9 @@
 #include <iostream>
 #include <string>
 #include <list>
-#include "Operation.hpp"
+#include "Token.hpp"
 
-class Command : public Operation{
+class Command : public Token{
 public:
     Command();
     Command(const unsigned&);

@@ -1,17 +1,13 @@
 #ifndef OPERATOR_HPP_INCLUDED
 #define OPERATOR_HPP_INCLUDED
 
-#include "Operation.hpp"
+#include "Token.hpp"
 
-class Operator : public PreposOp{
+class Operator : public Prepos{
 public:
     Operator();
     virtual ~Operator();
     virtual Complex * execute(Complex *) const;
-};
-
-class PreposOperator {
-
 };
 
 /// Arithmetic operators ///
@@ -45,7 +41,7 @@ public:
     Complex * execute(Complex *) const;
 };
 
-class Negative : public PostposOp{
+class Negative : public Postpos{
 public:
     Negative();
     Complex * execute(Complex *) const;
@@ -71,7 +67,7 @@ public:
     Complex * execute(Complex *) const;
 };
 
-class Not : public PostposOp{ // NOT
+class Not : public Postpos{ // NOT
 public:
     Not();
     Complex * execute(Complex *) const;

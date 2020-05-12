@@ -1,5 +1,5 @@
 #include "Dictionary.hpp"
-#include "Operation.hpp"
+#include "Token.hpp"
 #include "Operator.hpp"
 #include "Number.hpp"
 #include "Command.hpp"
@@ -11,7 +11,7 @@
 Dictionary dictionary;
 
 Dictionary::Dictionary(){
-    dictionary = new Trie<Operation>();
+    dictionary = new Trie<Token>();
     cursor = dictionary->getRoot();
     /// Operators:
     dictionary->addWord(new Plus());
@@ -79,7 +79,7 @@ Dictionary::Dictionary(){
     ///Misc:
     dictionary->addWord(new Ans());
     dictionary->addWord(new Parallel());
-    DEBUG_PRINT("Operations added\n");
+    DEBUG_PRINT("Tokens added\n");
 }
 
 bool Dictionary::hasNext(char c) const {
@@ -91,27 +91,29 @@ void Dictionary::reset() {
     DEBUG_PRINT("reset dictionary\n");
 }
 
-Operation * Dictionary::getData() const {
+Token * Dictionary::getData() const {
     return cursor->getData();
 }
 
-Operation * Dictionary::searchNextChar(char c) const {
-    TreeNode<Operation> * retNode = cursor->getChild(c);
+Token * Dictionary::searchNextChar(char c) const {
+    TreeNode<Token> * retNode = cursor->getChild(c);
     if(retNode)
         return retNode->getData();
     return nullptr;
 }
 
-Operation * Dictionary::searchString(const std::string & s){
+Token * Dictionary::searchString(const std::string & s){
     reset();
     unsigned i = 0;
     for(; i < s.length() && cursor->getChild(s[i]); gotoNext(s[i++]));
-    if(i != s.length())
-        return nullptr;
-    return cursor->getData();
+    Token * ret = nullptr;
+    if(i == s.length())
+        ret = cursor->getData();
+    cursor = dictionary->getRoot();
+    return ret;
 }
 
-void Dictionary::addWord(Operation * op) {
+void Dictionary::addWord(Token * op) {
     dictionary->addWord(op);
 }
 

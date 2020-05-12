@@ -1,6 +1,7 @@
 #ifndef TREENODE_HPP_INCLUDED
 #define TREENODE_HPP_INCLUDED
 //#include "common.hpp"
+#include <iostream>
 
 template <class T>
 class TreeNode{
@@ -45,7 +46,7 @@ public:
     }
 
     virtual ~TreeNode(){
-        if(data != nullptr)
+        if(data)
             delete data;
         TreeNode * temp;
         while(children){

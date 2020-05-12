@@ -3,14 +3,13 @@
 
 #include <string>
 #include "MathFunctions.hpp"
-#include "Operation.hpp"
+#include "Token.hpp"
 
 class Number : public MathFunctions{
 public:
     Number();
     Number(const int&);
     Number(const char *);
-    //Numebr(const std::string &);
     Number(const char *, const Complex&&);
     Number(const char&, const Complex&&);
     Complex * execute(Complex *) const;
