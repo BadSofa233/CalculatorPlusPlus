@@ -1,9 +1,7 @@
 #ifndef COMMAND_H_INCLUDED
 #define COMMAND_H_INCLUDED
 
-#include <iostream>
 #include <string>
-#include <list>
 #include "Token.hpp"
 
 class Command : public Token{
@@ -12,6 +10,9 @@ public:
     Command(const unsigned&);
     virtual ~Command();
     //virtual void execute(const unsigned&, std::string *);
+    void printHelp();
+protected:
+    std::string helpMsg;
 };
 
 class Calculate : public Command{
@@ -51,14 +52,6 @@ public:
     void execute(const unsigned&, std::string *);
 private:
     std::string aboutMsg;
-};
-
-class Donate : public Command{
-public:
-    Donate();
-    void execute(const unsigned&, std::string *);
-private:
-    std::list<const char *> donationList;
 };
 
 class Exit : public Command{

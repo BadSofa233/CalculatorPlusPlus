@@ -63,21 +63,21 @@ Variable::Variable(const char * name){
     word = name;
     argNum = 0;
     value = Complex(0, 0);
-    type = NUMBER;
+    type = VARIABLE;
 }
 
 Variable::Variable(const char * name, const Complex&& x){
     word = name;
     argNum = 0;
     value = x;
-    type = NUMBER;
+    type = VARIABLE;
 }
 
 Variable::Variable(const char& name, const Complex&& x){
     word = name;
     argNum = 0;
     value = x;
-    type = NUMBER;
+    type = VARIABLE;
 }
 
 Ans::Ans() : Variable("ans"){}

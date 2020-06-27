@@ -3,7 +3,7 @@
 
 #include <string>
 #include "MathFunctions.hpp"
-#include "Token.hpp"
+//#include "Token.hpp"
 
 class Number : public MathFunctions{
 public:

@@ -1,18 +1,24 @@
 
 #include "common.hpp"
 #include "Command.hpp"
-#include "Dictionary.hpp"
+#include "TokenDictionary.hpp"
 
 Command::Command() : Token(){
     type = COMMAND;
+    helpMsg = "";
 }
 
 Command::~Command(){}
+
+void Command::printHelp() {
+    std::cout << helpMsg << '\n';
+}
 
 //void Command::execute(const unsigned& argc, std::string* argv){}
 
 Calculate::Calculate() : Command(){
     word = "calculate";
+    helpMsg = "Enter an arithmetic expression and hit enter. Do not include spaces in your expression.\n";
 }
 
 extern Complex * calcString(std::string &);
@@ -29,7 +35,6 @@ Use::Use() : Command(){
 }
 
 void Use::execute(const unsigned& argc, std::string* argv){
-    DEBUG_PRINT("Use argc: %d\n", argc);
     for(unsigned i = 0; i < argc; ++i){
         if(argv[i][0] == '-' && argv[i].length() == 2){
             switch(argv[i][1]){
@@ -40,9 +45,8 @@ void Use::execute(const unsigned& argc, std::string* argv){
                 setImagUnit(argc, argv, ++i);
                 break;
             case 'h':
-                std::cout << "Use help message not written yet...\n"; // COME ON WRITE IT PLEASE, and other help messages
+                std::cout << "Use help message not written yet...\n"; // ...
                 break;
-            // consider -d for default settings in later dev
             default:
                 goto ERR_OUT;
             }
@@ -63,12 +67,12 @@ void Use::setAngle(const unsigned& argc, std::string* s, unsigned& pos){
         goto ERR_OUT;
 
     if(s[pos] == "deg"){
-        GIO.AngIO.deg = true;
+        globalFormat.angleFormat.deg = true;
         std::cout << "Angle format set to degrees.\n";
         return;
     }
     else if(s[pos] == "rad"){
-        GIO.AngIO.deg = false;
+        globalFormat.angleFormat.deg = false;
         std::cout << "Angle format set to radians.\n";
         return;
     }
@@ -92,21 +96,21 @@ void Use::setImagUnit(const unsigned& argc, std::string * argv, unsigned& pos){
             return;
         }
         if(argv[pos].length() == 1){
-            if(argv[pos][0] != GIO.CompNumIO.i && dictionary.searchString(argv[pos]))
+            if(argv[pos][0] != globalFormat.complexNumberFormat.i && tokenDictionary.searchString(argv[pos]))
                 goto ERR_OUT;
-            GIO.CompNumIO.refreshImagUnit(argv[pos][0]);
+            globalFormat.complexNumberFormat.refreshImagUnit(argv[pos][0]);
             DEBUG_PRINT("Refreshed imaginary unit\n");
-            std::cout << "Imaginary unit set to " << GIO.CompNumIO.i << ".\n";
+            std::cout << "Imaginary unit set to " << globalFormat.complexNumberFormat.i << ".\n";
         }
         else if(argv[pos] == "prefix" || argv[pos] == "postfix"){
-            GIO.CompNumIO.prefix = (argv[pos] == "prefix");
+            globalFormat.complexNumberFormat.prefix = (argv[pos] == "prefix");
             std::cout << "Imaginary unit is now ";
-            GIO.CompNumIO.prefix ? std::cout << "prefix\n" : std::cout << "postfix\n";
+            globalFormat.complexNumberFormat.prefix ? std::cout << "prefix\n" : std::cout << "postfix\n";
         }
         else if(argv[pos] == "cis" || argv[pos] == "abi"){
-            GIO.CompNumIO.abiForm = (argv[pos] == "abi");
-            std::cout << "Complex number form is now ";
-            GIO.CompNumIO.abiForm ? std::cout << "a+bi\n" : std::cout << "cis\n";
+            globalFormat.complexNumberFormat.abiForm = (argv[pos] == "abi");
+            std::cout << "Complex number format is now ";
+            globalFormat.complexNumberFormat.abiForm ? std::cout << "a+bi\n" : std::cout << "cis\n";
         }
         else
             goto ERR_OUT;
@@ -161,7 +165,7 @@ void License::execute(const unsigned & argc, std::string * argv){
             }
         }
         fclose(fp);
-        std::cout << '\n';
+        std::cout << std::endl;
     }
     else if(argc == 1){
         std::cout << "This program is licensed under GPL v2.\n"
@@ -177,7 +181,9 @@ void License::execute(const unsigned & argc, std::string * argv){
 
 About::About(){
     word = "about";
-    aboutMsg = "";
+    aboutMsg = "This software calculates a math expression with complex numbers\n"
+                "Author:\tYuhan Li\tWE Computer Engineering (Hardware) 2022\n"
+                "Email:\tyli2993@uwo.ca\n";
 }
 
 void About::execute(const unsigned & argc, std::string * argv){
@@ -186,34 +192,7 @@ void About::execute(const unsigned & argc, std::string * argv){
         throw err;
     }
     std::cout << '\n';
-    aboutMsg += "This software calculates a math expression with complex numbers\n";
-    aboutMsg += "Author:\tYuhan Li\tWE Computer Engineering (Hardware) 2021\n";
-    aboutMsg += "Email:\tyli2993@uwo.ca\n";
     std::cout << aboutMsg << '\n';
-}
-
-Donate::Donate() : Command(){
-    word = "donate";
-    donationList.push_back("Haopu Yao");
-}
-
-void Donate::execute(const unsigned & argc, std::string * argv){
-    if(argc > 1){
-        invalid_func_arg err(word);
-        throw err;
-    }
-    std::cout << '\n'
-                << "Thanks for you interest in supporting this project!\n"
-                << "The donation link is:\n"
-                << "https://paypal.me/YuhanLi1999\n"
-                << "Your name will be listed in the donation list after a successful donation.\n"
-                << "Thank you!\n"
-                << "Yuhan Li\n"
-                << '\n';
-    std::cout << "Donation list:\n";
-    for(const char * name : donationList)
-        std::cout << name << '\n';
-    std::cout << '\n';
 }
 
 Exit::Exit() : Command(){

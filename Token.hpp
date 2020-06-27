@@ -11,7 +11,7 @@ enum TYPE{
     INVALID = 0,
     COMMAND,
     NUMBER,
-    IMAG_UNIT,
+    VARIABLE,
     FUNCTION,
     OPERATOR,
     OPEN_BRACKET,
@@ -45,9 +45,9 @@ public:
     virtual void formExpressionTree(ExpressionTree &);
 };
 
-
 class Postpos : public Token{
 public:
     virtual void formExpressionTree(ExpressionTree &);
 };
+
 #endif // TOKEN_HPP_INCLUDED

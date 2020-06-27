@@ -2,12 +2,21 @@
 #define OPERATOR_HPP_INCLUDED
 
 #include "Token.hpp"
+#include "ExpressionTree.hpp"
 
 class Operator : public Prepos{
 public:
     Operator();
     virtual ~Operator();
     virtual Complex * execute(Complex *) const;
+};
+
+/// Assignment operator ///
+class Assignment : public Operator{ // =
+public:
+    Assignment();
+    Complex * execute(Complex *) const;
+    void formExpressionTree(ExpressionTree &);
 };
 
 /// Arithmetic operators ///
@@ -54,7 +63,7 @@ public:
 };
 
 #ifdef CALCULATOR_VERSION_2_0
-/// Logic operators, literal ///
+// Logic operators, literal //
 class And : public RealOnly{ // AND
 public:
     And();
@@ -91,7 +100,7 @@ public:
     Complex * execute(Complex *) const;
 };
 
-/// Logic operators, symbolic ///
+// Logic operators, symbolic //
 class AndSymbolic : public And{ // &
 public:
     AndSymbolic();
@@ -113,7 +122,7 @@ public:
 };
 #endif // CALCULATOR_VERSION_2_0
 
-/// Electrical operators ///
+// Electrical operators //
 class Parallel : public Operator{ // Parallel impedance symbol ||
 public:
     Parallel();

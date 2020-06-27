@@ -1,5 +1,7 @@
 #include "Operator.hpp"
 #include "common.hpp"
+#include "TreeNode.hpp"
+#include "Expression.hpp"
 
 Operator::Operator() : Prepos(){
     type = OPERATOR;
@@ -10,6 +12,35 @@ Operator::~Operator(){}
 
 Complex * Operator::execute(Complex * argList) const{
     return nullptr;
+}
+
+Assignment::Assignment() : Operator(){
+    word = "=";
+    rankMatch = 0;
+}
+
+Complex * Assignment::execute(Complex * x) const {
+    return x;
+}
+
+void Assignment::formExpressionTree(ExpressionTree & expTree) {
+    DEBUG_PRINT("Forming expression tree with %s\n", word);
+    // note that these functions has preposition arguments
+    // so they must replace a child
+    TreeNode<Token> * oldParent = expTree.getRoot();
+    TreeNode<Token> * it = oldParent->getChild(0);
+    for(; it != nullptr; it = it->getLastChild()) {
+        if(getRankMatch() < it->getData()->getRankMatch()) { // this becomes new parent of it
+            DEBUG_PRINT("The node to be swapped: %s\n", it->getData()->getWord());
+            AssignmentExpression * newParent = new AssignmentExpression(it->getKey(), this);
+            newParent->addChild((Expression *)oldParent->replaceChild(it->getKey(), newParent));
+            it->setKey(0);
+            return;
+        }
+        oldParent = it;
+    }
+    // here means oldParent has no child
+    throw invalid_expression();
 }
 
 Plus::Plus() : Operator(){
@@ -100,9 +131,9 @@ And::And() : RealOnly(){
 Complex * And::execute(Complex * argList) const{
     RealOnly::checkReal(argList);
     unsigned temp = (int)argList[0].getReal() & (int)argList[1].getReal();
-    unsigned mask = 0b1 << GIO.WordLength.length();
+    unsigned mask = 0b1 << globalFormat.WordLength.length();
     if(mask & temp){ // detect if the highest bit is 1, the original number is negative
-        temp |= ~((unsigned)pow(2,GIO.WordLength.length()) - 1);
+        temp |= ~((unsigned)pow(2,globalFormat.WordLength.length()) - 1);
     }
     Complex * result = new Complex((double)temp, 0);
     delete[] argList;
@@ -132,9 +163,9 @@ Not::Not() : Postpos(){
 Complex * Not::execute(Complex * x) const{
     //RealOnly::checkReal(x);
     long temp = ~((long)x->getReal());
-    unsigned long mask = 0 & (0b1 << GIO.WordLength.length());
+    unsigned long mask = 0 & (0b1 << globalFormat.WordLength.length());
     if(mask & temp){ // detect if the highest bit is 1, the original number is negative
-        temp |= ~((long)pow(2, GIO.WordLength.length()) - 1);
+        temp |= ~((long)pow(2, globalFormat.WordLength.length()) - 1);
     }
     x->setReal((double)temp);
     return x;

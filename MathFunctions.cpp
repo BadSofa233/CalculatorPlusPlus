@@ -18,8 +18,8 @@ Sin::Sin() : MathFunctions(){
 }
 
 Complex* Sin::execute(Complex* x) const{
-    x->setAbi(sin(GIO.AngIO.d2r(x->getReal())) * cosh(GIO.AngIO.d2r(x->getImag())),
-              cos(GIO.AngIO.d2r(x->getReal())) * sinh(GIO.AngIO.d2r(x->getImag())));
+    x->setAbi(sin(globalFormat.angleFormat.d2r(x->getReal())) * cosh(globalFormat.angleFormat.d2r(x->getImag())),
+              cos(globalFormat.angleFormat.d2r(x->getReal())) * sinh(globalFormat.angleFormat.d2r(x->getImag())));
     return x;
 }
 
@@ -28,8 +28,8 @@ Cos::Cos() : MathFunctions(){
 }
 
 Complex* Cos::execute(Complex* x) const{
-    x->setAbi(cos(GIO.AngIO.d2r(x->getReal())) * cosh(GIO.AngIO.d2r(x->getImag())),
-              sin(GIO.AngIO.d2r(x->getReal())) * sinh(GIO.AngIO.d2r(x->getImag())));
+    x->setAbi(cos(globalFormat.angleFormat.d2r(x->getReal())) * cosh(globalFormat.angleFormat.d2r(x->getImag())),
+              sin(globalFormat.angleFormat.d2r(x->getReal())) * sinh(globalFormat.angleFormat.d2r(x->getImag())));
     return x;
 }
 
@@ -38,10 +38,10 @@ Tan::Tan() : MathFunctions(){
 }
 
 Complex* Tan::execute(Complex* x) const{
-    Complex SinOfX(sin(GIO.AngIO.d2r(x->getReal())) * cosh(GIO.AngIO.d2r(x->getImag())),
-                   cos(GIO.AngIO.d2r(x->getReal())) * sinh(GIO.AngIO.d2r(x->getImag())));
-    Complex CosOfX(cos(GIO.AngIO.d2r(x->getReal())) * cosh(GIO.AngIO.d2r(x->getImag())),
-                   sin(GIO.AngIO.d2r(x->getReal())) * sinh(GIO.AngIO.d2r(x->getImag())));
+    Complex SinOfX(sin(globalFormat.angleFormat.d2r(x->getReal())) * cosh(globalFormat.angleFormat.d2r(x->getImag())),
+                   cos(globalFormat.angleFormat.d2r(x->getReal())) * sinh(globalFormat.angleFormat.d2r(x->getImag())));
+    Complex CosOfX(cos(globalFormat.angleFormat.d2r(x->getReal())) * cosh(globalFormat.angleFormat.d2r(x->getImag())),
+                   sin(globalFormat.angleFormat.d2r(x->getReal())) * sinh(globalFormat.angleFormat.d2r(x->getImag())));
     *x = SinOfX / CosOfX;
     return x;
 }
@@ -51,10 +51,10 @@ Cot::Cot() : MathFunctions(){
 }
 
 Complex* Cot::execute(Complex* x) const{
-    Complex SinOfX(sin(GIO.AngIO.d2r(x->getReal())) * cosh(GIO.AngIO.d2r(x->getImag())),
-                   cos(GIO.AngIO.d2r(x->getReal())) * sinh(GIO.AngIO.d2r(x->getImag())));
-    Complex CosOfX(cos(GIO.AngIO.d2r(x->getReal())) * cosh(GIO.AngIO.d2r(x->getImag())),
-                   sin(GIO.AngIO.d2r(x->getReal())) * sinh(GIO.AngIO.d2r(x->getImag())));
+    Complex SinOfX(sin(globalFormat.angleFormat.d2r(x->getReal())) * cosh(globalFormat.angleFormat.d2r(x->getImag())),
+                   cos(globalFormat.angleFormat.d2r(x->getReal())) * sinh(globalFormat.angleFormat.d2r(x->getImag())));
+    Complex CosOfX(cos(globalFormat.angleFormat.d2r(x->getReal())) * cosh(globalFormat.angleFormat.d2r(x->getImag())),
+                   sin(globalFormat.angleFormat.d2r(x->getReal())) * sinh(globalFormat.angleFormat.d2r(x->getImag())));
     *x = CosOfX / SinOfX;
     return x;
 }
@@ -64,8 +64,8 @@ Sinh::Sinh() : MathFunctions(){
 }
 
 Complex* Sinh::execute(Complex* x) const{
-    x->setAbi(sinh(GIO.AngIO.d2r(x->getReal())) * cos(GIO.AngIO.d2r(x->getImag())),
-              cosh(GIO.AngIO.d2r(x->getReal())) * sin(GIO.AngIO.d2r(x->getImag())));
+    x->setAbi(sinh(globalFormat.angleFormat.d2r(x->getReal())) * cos(globalFormat.angleFormat.d2r(x->getImag())),
+              cosh(globalFormat.angleFormat.d2r(x->getReal())) * sin(globalFormat.angleFormat.d2r(x->getImag())));
     return x;
 }
 
@@ -74,8 +74,8 @@ Cosh::Cosh() : MathFunctions(){
 }
 
 Complex* Cosh::execute(Complex* x) const{
-    x->setAbi(cosh(GIO.AngIO.d2r(x->getReal())) * cos(GIO.AngIO.d2r(x->getImag())),
-              sinh(GIO.AngIO.d2r(x->getReal())) * sin(GIO.AngIO.d2r(x->getImag())));
+    x->setAbi(cosh(globalFormat.angleFormat.d2r(x->getReal())) * cos(globalFormat.angleFormat.d2r(x->getImag())),
+              sinh(globalFormat.angleFormat.d2r(x->getReal())) * sin(globalFormat.angleFormat.d2r(x->getImag())));
     return x;
 }
 
@@ -84,10 +84,10 @@ Tanh::Tanh() : MathFunctions(){
 }
 
 Complex* Tanh::execute(Complex* x) const{
-    Complex SinhOfX(sinh(GIO.AngIO.d2r(x->getReal())) * cos(GIO.AngIO.d2r(x->getImag())),
-                    cosh(GIO.AngIO.d2r(x->getReal())) * sin(GIO.AngIO.d2r(x->getImag())));
-    Complex CoshOfX(cosh(GIO.AngIO.d2r(x->getReal())) * cos(GIO.AngIO.d2r(x->getImag())),
-                    sinh(GIO.AngIO.d2r(x->getReal())) * sin(GIO.AngIO.d2r(x->getImag())));
+    Complex SinhOfX(sinh(globalFormat.angleFormat.d2r(x->getReal())) * cos(globalFormat.angleFormat.d2r(x->getImag())),
+                    cosh(globalFormat.angleFormat.d2r(x->getReal())) * sin(globalFormat.angleFormat.d2r(x->getImag())));
+    Complex CoshOfX(cosh(globalFormat.angleFormat.d2r(x->getReal())) * cos(globalFormat.angleFormat.d2r(x->getImag())),
+                    sinh(globalFormat.angleFormat.d2r(x->getReal())) * sin(globalFormat.angleFormat.d2r(x->getImag())));
     *x = SinhOfX / CoshOfX;
     return x;
 }
@@ -98,7 +98,7 @@ Ln::Ln() : MathFunctions(){
 
 Complex* Ln::execute(Complex* x) const{
     x->setAbi(log(x->getMagn()),
-              GIO.AngIO.r2d(x->getAngl()));
+              globalFormat.angleFormat.r2d(x->getAngl()));
     return x;
 }
 
@@ -172,7 +172,7 @@ Complex* Asinh::execute(Complex* x) const{
     *result = x->complexPow(2) + (*result); // 1+x^2
     *result = result->complexPow(0.5) + (*x); // x+sqrt(1+x^2)
     *x = *(Ln::execute(result));
-    x->setReal(GIO.AngIO.r2d(result->getReal()));
+    x->setReal(globalFormat.angleFormat.r2d(result->getReal()));
     delete result;
     return x;
 }
@@ -186,7 +186,7 @@ Complex* Acosh::execute(Complex* x) const{
     *result = x->complexPow(2) - (*result); // (x^2)-1
     *result = result->complexPow(0.5) + (*x);
     *x = *(Ln::execute(result));
-    x->setReal(GIO.AngIO.r2d(result->getReal()));
+    x->setReal(globalFormat.angleFormat.r2d(result->getReal()));
     delete result;
     return x;
 }
@@ -205,7 +205,7 @@ Complex* Atanh::execute(Complex* x) const{
     *result = (*temp) - (*result); // ln(1+x)-ln(1-x)
     temp->setAbi(0.5, 0); // temp = 1/2
     *x = (*temp) * (*result); // (1/2)(ln(1+x)-ln(1-x))
-    x->setReal(GIO.AngIO.r2d(result->getReal()));
+    x->setReal(globalFormat.angleFormat.r2d(result->getReal()));
     delete temp; delete result;
     return x;
 }
@@ -239,7 +239,7 @@ Exp::Exp() : MathFunctions(){
 Complex* Exp::execute(Complex* x) const{
     Complex temp = *x;
     x->setMagn(pow(EULER_NUMBER, temp.getReal()));
-    x->setAngl(GIO.AngIO.d2r(temp.getImag()));
+    x->setAngl(globalFormat.angleFormat.d2r(temp.getImag()));
     return x;
 }
 
@@ -266,7 +266,7 @@ Angle::Angle() : MathFunctions(){
 }
 
 Complex* Angle::execute(Complex * x) const{
-    x->setAbi(GIO.AngIO.r2d(x->getAngl()), 0);
+    x->setAbi(globalFormat.angleFormat.r2d(x->getAngl()), 0);
     return x;
 }
 
@@ -280,7 +280,7 @@ Complex* Cis::execute(Complex* x) const{
         throw(err);
     }
     Complex* result = new Complex(0, 0);
-    result->setCis(1, GIO.AngIO.d2r(x->getReal())); // note that the angle is stored in radians
+    result->setCis(1, globalFormat.angleFormat.d2r(x->getReal())); // note that the angle is stored in radians
     if(x != nullptr){
         delete x;
         x = nullptr;

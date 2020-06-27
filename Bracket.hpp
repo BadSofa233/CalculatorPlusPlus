@@ -3,7 +3,6 @@
 
 #include "Token.hpp"
 
-/// Brackets ///
 class Bracket : public Token{
 public:
     Bracket();
@@ -12,14 +11,14 @@ public:
 class OpenBracket : public Bracket{
 public:
     OpenBracket();
-    void formExpressionTree(ExpressionTree &);
+    void formExpressionTree(ExpressionTree &) override;
     Complex * execute(Complex *) const;
 };
 
 class CloseBracket : public Bracket{
 public:
     CloseBracket();
-    void formExpressionTree(ExpressionTree &);
+    void formExpressionTree(ExpressionTree &) override;
 };
 
 class OpenRound : public OpenBracket{ // (

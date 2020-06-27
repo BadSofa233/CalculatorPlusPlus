@@ -26,7 +26,7 @@
 #include <exception>
 #include "config.hpp"
 #include "Complex.hpp"
-#include "Dictionary.hpp"
+#include "TokenDictionary.hpp"
 #include "Token.hpp"
 #include "Command.hpp"
 #include "Calculation.hpp"
@@ -62,9 +62,9 @@ int main(){
             fetchArgs(argc, &argv, input);
             DEBUG_PRINT("fetch args complete\n");
             cmdArgv = argv;
-            Token * cmd = dictionary.searchString("calculate");
+            Token * cmd = tokenDictionary.searchString("calculate");
             DEBUG_PRINT("Fetched 'calculate' command\n");
-            Token * op = dictionary.searchString(argv[0]);
+            Token * op = tokenDictionary.searchString(argv[0]);
             if(op != nullptr && op->getType() == COMMAND){
                 cmd = op;
                 DEBUG_PRINT("Fetched '%s' command\n", cmd->getWord());

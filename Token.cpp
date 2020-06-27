@@ -1,6 +1,7 @@
 #include "Token.hpp"
 #include "TreeNode.hpp"
 #include "Expression.hpp"
+#include "common.hpp"
 
 Token::Token(){}
 
@@ -55,7 +56,7 @@ void Prepos::formExpressionTree(ExpressionTree & expTree) {
         oldParent = it;
     }
     // here means oldParent has no child
-    std::cout << "Error forming expression tree at PreposFunction\n";
+    throw invalid_expression();
 }
 
 void Postpos::formExpressionTree(ExpressionTree & expTree) {

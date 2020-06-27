@@ -2,24 +2,17 @@
 #define COMMON_HPP_INCLUDED
 #include <string>
 #include <stdexcept>
-#include "Dictionary.hpp"
+#include "TokenDictionary.hpp"
 #include "Number.hpp"
 
-///Mathematical constants
+//Mathematical constants
 const double PI = 3.14159265358979323846264338327950288;
 const double EULER_NUMBER = 2.71828182845904523536;
 
-///Global settings and functions
-#define OP_LIST_SIZE 8
-#define BR_LIST_SIZE 6
-#define NUM_LIST_SIZE 10
-#ifndef ALPHABET_SIZE
-# define ALPHABET_SIZE 26
-#endif // ALPHABET_SIZE
-
-class GlobalIO{
+//Global settings and functions
+class GlobalFormat{
 public:
-    GlobalIO();
+    GlobalFormat();
     class BitWordLength{
     public:
         BitWordLength(){
@@ -31,19 +24,19 @@ public:
         unsigned wordLength;
     };
 
-    class ComplexNumebrIO{ // Set the display format for complex numbers
+    class ComplexNumebrFormat{ // Set the display format for complex numbers
     public:
-        ComplexNumebrIO(){
+        ComplexNumebrFormat(){
             i = 'i';
             prefix = false;
-            dictionary.addWord(new ImaginaryUnit(i));
+            tokenDictionary.addToken(new ImaginaryUnit(i));
             abiForm = true;
         }
         char imagUnit() const {return i;}
         void refreshImagUnit(const char& c){
-            dictionary.deleteWord(i);
+            tokenDictionary.deleteWord(i);
             i = c;
-            dictionary.addWord(new ImaginaryUnit(i));
+            tokenDictionary.addToken(new ImaginaryUnit(i));
         }
         bool preOrPost() const {return prefix;}
         bool abiOrCis() const {return abiForm;}
@@ -55,9 +48,9 @@ public:
         bool abiForm; // false means cis form
     };
 
-    class AngleIO{ // Set the output format of angles
+    class AngleFormat{ // Set the output format of angles
     public:
-        AngleIO() {
+        AngleFormat() {
             deg = true;
         }
         double r2d(const double& x) const {return deg ? x / PI * (double)180 : x;}
@@ -67,16 +60,16 @@ public:
         friend class Use; // only the Use class (command) has access to global settings
         bool deg;
     };
-    BitWordLength WordLength;
-    ComplexNumebrIO CompNumIO;
-    AngleIO AngIO;
+    BitWordLength wordLength;
+    ComplexNumebrFormat complexNumberFormat;
+    AngleFormat angleFormat;
 };
 
-extern GlobalIO GIO;
+extern GlobalFormat globalFormat;
 
 std::ostream& operator<<(std::ostream&, const Complex&);
 
-///Exceptions
+//Exceptions
 class invalid_character : public std::invalid_argument{
 public:
     invalid_character(const char&);
@@ -108,9 +101,7 @@ public:
     invalid_expression();
 };
 
-/// printing for debugging
-const char * const MonthLUT[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-
-void print(const char * , ...);
+// warning message
+void print_warning(std::string);
 
 #endif // COMMON_HPP_INCLUDED
