@@ -46,7 +46,7 @@ void Prepos::formExpressionTree(ExpressionTree & expTree) {
     TreeNode<Token> * oldParent = expTree.getRoot();
     TreeNode<Token> * it = oldParent->getChild(0);
     for(; it != nullptr; it = it->getLastChild()) {
-        if(getRankMatch() < it->getData()->getRankMatch()) { // this becomes new parent of it
+        if(getRankMatch() <= it->getData()->getRankMatch()) { // this becomes new parent of it
             DEBUG_PRINT("The node to be swapped: %s\n", it->getData()->getWord());
             Expression * newParent = new Expression(it->getKey(), this);
             newParent->addChild((Expression *)oldParent->replaceChild(it->getKey(), newParent));

@@ -21,7 +21,6 @@
 
 #include <iostream>
 #include <string>
-#include <stack>
 #include <math.h>
 #include <exception>
 #include "config.hpp"

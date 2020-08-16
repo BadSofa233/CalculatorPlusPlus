@@ -1,6 +1,5 @@
 #ifndef TREENODE_HPP_INCLUDED
 #define TREENODE_HPP_INCLUDED
-//#include "common.hpp"
 #include <iostream>
 
 template <class T>

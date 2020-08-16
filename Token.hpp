@@ -1,7 +1,6 @@
 #ifndef TOKEN_HPP_INCLUDED
 #define TOKEN_HPP_INCLUDED
 
-#include <stack>
 #include "Complex.hpp"
 #include "ExpressionTree.hpp"
 
